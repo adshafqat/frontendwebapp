@@ -27,6 +27,7 @@ public class FrontendController {
 	private String backendCaller()
 	{
 	    RestTemplate restTemplate = new RestTemplate();
+		System.out.println("Calling backend Service");		
 	    String result = restTemplate.getForObject(backendserverProperties.getUrl(), String.class);
 	    return "Here I am printing Results :"+result; 
 	}
