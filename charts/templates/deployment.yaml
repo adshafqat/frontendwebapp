@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontendwebapp
+  labels:
+    app: frontendwebapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontendwebapp
+  template:
+    metadata:
+      labels:
+        app: frontendwebapp
+    spec:
+      containers:
+        - name: frontendwebapp
+          image: docker.io/ashafqat/frontendimage:v1.0
+          imagePullPolicy: IfNotPresent
+          #imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          # This section is only required if you are attaching a volume like a config map or secret to your application
+          volumeMounts:
+            - name: config
+              readOnly: true
+              mountPath: /config
+          ####
+      # This section is only required if you are attaching a volume like a config map or a secret to your application
+      volumes:
+        - name: config
+          configMap:
+            name: frontendwebappcm
+            items:
+              - key: application.yml
+                path: application.yml
+        ####
