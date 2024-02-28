@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontendwebapp
-          image: docker.io/ashafqat/frontendimage:v1.0
+          image: docker.io/ashafqat/frontendimage:v2.0
           imagePullPolicy: IfNotPresent
           #imagePullPolicy: Never
           ports:
